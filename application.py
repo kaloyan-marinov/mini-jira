@@ -6,30 +6,29 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
 
-MYSQL_RANDOM_ROOT_PASSWORD = os.environ.get("MYSQL_RANDOM_ROOT_PASSWORD")
+DB_ENGINE_HOSTNAME = os.environ.get("DB_ENGINE_HOSTNAME")
+
 MYSQL_DATABASE = os.environ.get("MYSQL_DATABASE")
 MYSQL_USER = os.environ.get("MYSQL_USER")
 MYSQL_PASSWORD = os.environ.get("MYSQL_PASSWORD")
 
 if (
-    MYSQL_RANDOM_ROOT_PASSWORD is None
+    DB_ENGINE_HOSTNAME is None
     or MYSQL_DATABASE is None
     or MYSQL_USER is None
     or MYSQL_PASSWORD is None
 ):
     print(
         "To run this module,"
-        " you must set a each of"
-        " `MYSQL_RANDOM_ROOT_PASSWORD`, `MYSQL_DATABASE`, `MYSQL_USER`,"
+        " you must set each of"
+        " `DB_ENGINE_HOSTNAME`, `MYSQL_DATABASE`, `MYSQL_USER`,"
         " `MYSQL_PASSWORD`"
         " as environment variables - aborting ..."
     )
     sys.exit(1)
 
 
-DATABASE_URL = (
-    f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@localhost:3307/{MYSQL_DATABASE}"
-)
+DATABASE_URL = f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{DB_ENGINE_HOSTNAME}:3306/{MYSQL_DATABASE}"
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL

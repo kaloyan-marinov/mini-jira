@@ -1,0 +1,36 @@
+version: "3.7"
+
+services:
+
+  service-mysql:
+    image: mysql:8.0.26
+    container_name: ${DB_ENGINE_HOSTNAME:?env var cannot be unset or empty}
+    volumes:
+      - volume-microjira-mysql:/var/lib/mysql
+    restart: always
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD
+      - MYSQL_DATABASE
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+  
+  service-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: image-microjira-backend:2022-03-09-19-16
+    container_name: container-microjira-backend
+    depends_on:
+      - service-mysql
+    environment:
+      - DB_ENGINE_HOSTNAME
+      - MYSQL_DATABASE
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+    expose:
+      - "5000"
+    ports:
+      - "8000:5000"
+
+volumes:
+  volume-microjira-mysql:

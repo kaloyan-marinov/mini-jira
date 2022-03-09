@@ -98,6 +98,20 @@ $ cp .env.template .env
     ```
 
     ```
+    $ DB_ENGINE_HOSTNAME=container-microjira-mysql docker compose \
+        --env-file .env \
+        config
+    
+    $ DB_ENGINE_HOSTNAME=container-microjira-mysql docker compose \
+        --env-file .env \
+        build
+    
+    $ DB_ENGINE_HOSTNAME=container-microjira-mysql docker compose \
+        --env-file .env \
+        up
+    ```
+
+    ```
     $ curl localhost:8000/api/health-check | json_pp
       % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                     Dload  Upload   Total   Spent    Left  Speed
