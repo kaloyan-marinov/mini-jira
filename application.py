@@ -62,6 +62,11 @@ class Issue(db.Model):
         return f"<Issue (id={self.id})>"
 
 
+@app.route("/api/health-check", methods=["GET"])
+def health_check():
+    return {"health-check": "passed"}
+
+
 @app.route("/api/projects", methods=["POST"])
 def create_project():
     name = request.json.get("name")
