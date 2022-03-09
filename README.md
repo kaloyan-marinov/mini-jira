@@ -94,4 +94,38 @@ $ cp .env.template .env
     {
       "health-check" : "passed"
     }
+
+    $ curl localhost:8000/api/projects | json_pp
+      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                    Dload  Upload   Total   Spent    Left  Speed
+    100    16  100    16    0     0    139      0 --:--:-- --:--:-- --:--:--   177
+    {
+      "projects" : []
+    }
+
+    $ curl \
+      -X POST \
+      -H "Content-Type: application/json" \
+      -d '{"name": "Build a basic web application using Flask"}' \
+      localhost:8000/api/projects \
+      | json_pp
+      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                    Dload  Upload   Total   Spent    Left  Speed
+    100   113  100    60  100    53    642    567 --:--:-- --:--:-- --:--:--  1793
+    {
+      "id" : 1,
+      "name" : "Build a basic web application using Flask"
+    }
+
+    $ curl localhost:8000/api/projects | json_pp
+      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                    Dload  Upload   Total   Spent    Left  Speed
+    100    68  100    68    0     0    945      0 --:--:-- --:--:-- --:--:--  2720
+    {
+      "projects" : [
+          {
+            "name" : "Build a basic web application using Flask"
+          }
+      ]
+    }
     ```
