@@ -8,7 +8,7 @@ $ cp .env.template .env
 
 # Options for serving the application and issuing requests to it
 
-1. Locally
+1. Using Docker to serve the persistence layer, but locally serving the Flask application:
 
     ```
     $ python3 --version
@@ -18,6 +18,17 @@ $ cp .env.template .env
     $ source venv/bin/activate
     (venv) $ pip install --upgrade pip
     (venv) $ pip install -r requirements.txt
+    ```
+
+    ```
+    docker run \
+        --name container-microjira-mysql \
+        --add-host host.docker.internal:host-gateway \
+        --mount source=volume-microjira-mysql,destination=/var/lib/mysql \
+        --env-file .env \
+        --publish 3307:3306 \
+        mysql:8.0.26 \
+        --default-authentication-plugin=mysql_native_password
     ```
 
     ```
