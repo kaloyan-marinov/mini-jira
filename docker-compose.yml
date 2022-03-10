@@ -6,7 +6,7 @@ services:
     image: mysql:8.0.26
     container_name: ${DB_ENGINE_HOSTNAME:?env var cannot be unset or empty}
     volumes:
-      - volume-microjira-mysql:/var/lib/mysql
+      - volume-mini-jira-mysql:/var/lib/mysql
     restart: always
     environment:
       - MYSQL_RANDOM_ROOT_PASSWORD
@@ -18,8 +18,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: image-microjira-backend:2022-03-09-19-16
-    container_name: container-microjira-backend
+    image: image-mini-jira-backend:2022-03-09-19-16
+    container_name: container-mini-jira-backend
     depends_on:
       - service-mysql
     environment:
@@ -33,4 +33,4 @@ services:
       - "8000:5000"
 
 volumes:
-  volume-microjira-mysql:
+  volume-mini-jira-mysql:

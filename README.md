@@ -22,20 +22,17 @@ $ cp .env.template .env
 
     ```
     docker run \
-        --name container-microjira-mysql \
+        --name container-mini-jira-mysql \
         --add-host host.docker.internal:host-gateway \
-        --mount source=volume-microjira-mysql,destination=/var/lib/mysql \
+        --mount source=volume-mini-jira-mysql,destination=/var/lib/mysql \
         --env-file .env \
-        --publish 3307:3306 \
+        --publish 3306:3306 \
         mysql:8.0.26 \
         --default-authentication-plugin=mysql_native_password
     ```
 
     ```
     (venv) $ FLASK_APP=application.py flask db upgrade
-
-    (venv) $ ll *.sqlite
-    -rw-r--r--  1 <user-owner>  <group-owner>    24K Mar  9 06:53 database.sqlite
     ```
 
     ```
@@ -86,15 +83,15 @@ $ cp .env.template .env
 2. Using Docker to serve both the persistence layer and the Flask application:
 
     ```
-    $ DB_ENGINE_HOSTNAME=container-microjira-mysql docker compose \
+    $ DB_ENGINE_HOSTNAME=container-mini-jira-mysql docker compose \
         --env-file .env \
         config
     
-    $ DB_ENGINE_HOSTNAME=container-microjira-mysql docker compose \
+    $ DB_ENGINE_HOSTNAME=container-mini-jira-mysql docker compose \
         --env-file .env \
         build
     
-    $ DB_ENGINE_HOSTNAME=container-microjira-mysql docker compose \
+    $ DB_ENGINE_HOSTNAME=container-mini-jira-mysql docker compose \
         --env-file .env \
         up
     ```
